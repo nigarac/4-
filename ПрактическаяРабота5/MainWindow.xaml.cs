@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ПрактическаяРабота5.Classes;
 
 namespace ПрактическаяРабота5
 {
@@ -20,9 +21,22 @@ namespace ПрактическаяРабота5
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<Pawn> Pawns = new List<Pawn>();
+        public static MainWindow mainWindow;
         public MainWindow()
         {
             InitializeComponent();
+            mainWindow = this;
+        }
+
+        public void SelectTitle(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        public void OnSelect(Pawn pawn)
+        {
+
         }
     }
 }
