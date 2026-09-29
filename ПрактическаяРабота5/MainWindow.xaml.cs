@@ -27,26 +27,43 @@ namespace ПрактическаяРабота5
         {
             InitializeComponent();
             mainWindow = this;
+            Pawns.Add(new Classes.Pawn(0, 1, false));
+            Pawns.Add(new Classes.Pawn(1, 1, false));
+            Pawns.Add(new Classes.Pawn(2, 1, false));
+            Pawns.Add(new Classes.Pawn(3, 1, false));
+            Pawns.Add(new Classes.Pawn(4, 1, false));
+            Pawns.Add(new Classes.Pawn(5, 1, false));
+            Pawns.Add(new Classes.Pawn(6, 1, false));
+            Pawns.Add(new Classes.Pawn(7, 1, false));
+            // Добавление чёрных пешек
+            Pawns.Add(new Classes.Pawn(0, 6, true));
+            Pawns.Add(new Classes.Pawn(1, 6, true));
+            Pawns.Add(new Classes.Pawn(2, 6, true));
+            Pawns.Add(new Classes.Pawn(3, 6, true));
+            Pawns.Add(new Classes.Pawn(4, 6, true));
+            Pawns.Add(new Classes.Pawn(5, 6, true));
+            Pawns.Add(new Classes.Pawn(6, 6, true));
+            Pawns.Add(new Classes.Pawn(7, 6, true));
         }
 
-        public void SelectTitle(object sender, MouseButtonEventArgs e)
-        {
-            Grid Tile = sender as Grid;
+        //public void SelectTitle(object sender, MouseButtonEventArgs e)
+        //{
+        //    Grid Tile = sender as Grid;
 
-            // Получаем координаты выбранного тайла
-            int X = Grid.GetColumn(Tile);
-            int Y = Grid.GetRow(Tile);
+        //    // Получаем координаты выбранного тайла
+        //    int X = Grid.GetColumn(Tile);
+        //    int Y = Grid.GetRow(Tile);
 
-            // Получаем выбранную пешку
-            Classes.Pawn SelectPawn = Pawns.Find(x => x.Select == true);
+        //    // Получаем выбранную пешку
+        //    Classes.Pawn SelectPawn = Pawns.Find(x => x.Select == true);
 
-            // Если выбранная пешка присутствует
-            if (SelectPawn != null)
-            {
-                // Перемещаем пешку на выбранный тайл
-                SelectPawn.Transform(X, Y);
-            }
-        }
+        //    // Если выбранная пешка присутствует
+        //    if (SelectPawn != null)
+        //    {
+        //        // Перемещаем пешку на выбранный тайл
+        //        SelectPawn.Transform(X, Y);
+        //    }
+        //}
 
         public void OnSelect(Classes.Pawn SelectPawn)
         {
@@ -71,7 +88,7 @@ namespace ПрактическаяРабота5
                 };
                 // В зависимости от цвета пешки, указываем ей изображение
                 if (Pawn.Black)
-                    Pawn.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn (black).png")));
+                    Pawn.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn(black).png")));
                 else
                     Pawn.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn.png")));
                 // Перемещаем пешку на указанную позицию/стартовую позицию
@@ -81,6 +98,25 @@ namespace ПрактическаяРабота5
                 Pawn.Figure.MouseDown += Pawn.SelectFigure;
                 // Добавляем на интерфейс созданную пешку
                 gameBoard.Children.Add(Pawn.Figure);
+            }
+        }
+
+        private void SelectTile(object sender, MouseButtonEventArgs e)
+        {
+            Grid Tile = sender as Grid;
+
+            // Получаем координаты выбранного тайла
+            int X = Grid.GetColumn(Tile);
+            int Y = Grid.GetRow(Tile);
+
+            // Получаем выбранную пешку
+            Classes.Pawn SelectPawn = Pawns.Find(x => x.Select == true);
+
+            // Если выбранная пешка присутствует
+            if (SelectPawn != null)
+            {
+                // Перемещаем пешку на выбранный тайл
+                SelectPawn.Transform(X, Y);
             }
         }
     }
