@@ -31,12 +31,57 @@ namespace ПрактическаяРабота5
 
         public void SelectTitle(object sender, MouseButtonEventArgs e)
         {
+            Grid Tile = sender as Grid;
 
+            // Получаем координаты выбранного тайла
+            int X = Grid.GetColumn(Tile);
+            int Y = Grid.GetRow(Tile);
+
+            // Получаем выбранную пешку
+            Classes.Pawn SelectPawn = Pawns.Find(x => x.Select == true);
+
+            // Если выбранная пешка присутствует
+            if (SelectPawn != null)
+            {
+                // Перемещаем пешку на выбранный тайл
+                SelectPawn.Transform(X, Y);
+            }
         }
 
-        public void OnSelect(Pawn pawn)
+        public void OnSelect(Classes.Pawn SelectPawn)
         {
+            foreach (Classes.Pawn Pawn in Pawns)
+            {
+                if (Pawn != SelectPawn)
+                    if (Pawn.Select)
+                        Pawn.SelectFigure(null, null);
+            }
+        }
 
+        public void CreateFigure()
+        {
+            // Перебираем коллекцию пешек
+            foreach (Classes.Pawn Pawn in Pawns)
+            {
+                // Создаём элемент Grid, с размерами тайла
+                Pawn.Figure = new Grid()
+                {
+                    Width = 50,
+                    Height = 50
+                };
+                // В зависимости от цвета пешки, указываем ей изображение
+                if (Pawn.Black)
+                    Pawn.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn (black).png")));
+                else
+                    Pawn.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn.png")));
+                // Перемещаем пешку на указанную позицию/стартовую позицию
+                Grid.SetColumn(Pawn.Figure, Pawn.X);
+                Grid.SetRow(Pawn.Figure, Pawn.Y);
+                // Подписываемся на событие нажатия на пешку
+                Pawn.Figure.MouseDown += Pawn.SelectFigure;
+                // Добавляем на интерфейс созданную пешку
+                gameBoard.Children.Add(Pawn.Figure);
+            }
         }
     }
 }
