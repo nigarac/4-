@@ -30,16 +30,16 @@ namespace ПрактическаяРабота5.Classes
             // Переменная отвечающая за то, атакуют ли нашу фигуру
             bool atack = false;
 
-            // Среди всех пешек ищем пешку, которая является выделенной
+            // Среди всех пешек ищем пешку, которая является выделенной                                                                           
             Pawn SelectPawn = MainWindow.mainWindow.Pawns.Find(x => x.Select == true);
 
             // Если выделенная пешка существует
             if (SelectPawn != null)
             {
-                // Проверяем атакует ли нас эта пешка, если это чёрная пешка, проверяем находится ли она ниже нас, и входит ли в диапазон атаки
-                if (this.Black && this.Y - 1 == SelectPawn.Y && (this.X - 1 == SelectPawn.X || this.X == SelectPawn.X || this.X + 1 == SelectPawn.X) ||
+                // Проверяем атакует ли нас эта пешка, если это чёрн=ая пешка, проверяем находится ли она ниже нас, и входит ли в диапазон атаки    
+                if (this.Black && this.Y - 1 == SelectPawn.Y && (X == SelectPawn.X-1 || X == SelectPawn.X+1) ||
                     // Если пешка является чёрной, проверяем находится ли она ниже нас, и входит ли в диапазон атаки
-                    !this.Black && this.Y + 1 == SelectPawn.Y && (this.X - 1 == SelectPawn.X || this.X == SelectPawn.X || this.X + 1 == SelectPawn.X))
+                    !this.Black && this.Y + 1 == SelectPawn.Y && (X == SelectPawn.X - 1 || X == SelectPawn.X + 1))
                 {
                     // Обращаемся к доске, и удаляем пешку с доски
                     MainWindow.mainWindow.gameBoard.Children.Remove(this.Figure);
@@ -71,7 +71,7 @@ namespace ПрактическаяРабота5.Classes
                 {
                     // В зависимости от нашего цвета Белого/Чёрного, отображаем иконку
                     if (this.Black)
-                        this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn (black).png")));
+                        this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn(black).png")));
                     else
                         this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn.png")));
 
@@ -81,7 +81,7 @@ namespace ПрактическаяРабота5.Classes
                 else
                 {
                     // Если пешка не выделена, изменяем иконку на выделенную
-                    this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn (select).png")));
+                    this.Figure.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Images/Pawn(select).png")));
 
                     // Запоминаем что пешка является выделенной
                     this.Select = true;

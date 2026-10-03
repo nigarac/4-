@@ -64,6 +64,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\Bishop.cs" />
     <Compile Include="Classes\Pawn.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -87,6 +88,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -98,13 +100,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="images\Pawn %28black%29.png" />
+    <Resource Include="images\Pawn%28black%29.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Image1.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\Pawn %28select%29.png" />
+    <Resource Include="images\Pawn%28select%29.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\Pawn.png" />
