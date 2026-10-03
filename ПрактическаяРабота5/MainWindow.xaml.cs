@@ -64,7 +64,7 @@ namespace ПрактическаяРабота5
         //    int Y = Grid.GetRow(Tile);
 
         //    // Получаем выбранную пешку
-        //    Classes.Pawn SelectPawn = Pawns.Find(x => x.Select == true);
+        //    Classes.Pawn SelectPawn = Pawns.Find(x => x.Seйlect == true);
 
         //    // Если выбранная пешка присутствует
         //    if (SelectPawn != null)
