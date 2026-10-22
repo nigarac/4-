@@ -147,6 +147,7 @@ namespace ПрактическаяРабота5
 
         private void SelectTile(object sender, MouseButtonEventArgs e)
         {
+            MainWindow.mainWindow.ClearDots();
             Grid Tile = sender as Grid;
 
             // Получаем координаты выбранного тайла
@@ -168,6 +169,36 @@ namespace ПрактическаяРабота5
             {
                 SelectBishop.Transform(X, Y);
             }
+        }
+        // 1. Очищает все кружочки с доски
+        public void ClearDots()
+        {
+            var dots = gameBoard.Children.OfType<System.Windows.Shapes.Ellipse>().ToList();
+            foreach (var dot in dots)
+            {
+                gameBoard.Children.Remove(dot);
+            }
+        }
+
+        // 2. Рисует кружочек в нужной клетке
+        public void DrawDot(int x, int y, bool isEnemy)
+        {
+            System.Windows.Shapes.Ellipse dot = new System.Windows.Shapes.Ellipse();
+            dot.Width = 20;
+            dot.Height = 20;
+            // Если враг - красный, если пусто - зеленый
+            dot.Fill = isEnemy ? System.Windows.Media.Brushes.Red : System.Windows.Media.Brushes.LimeGreen;
+            dot.Opacity = 0.6;
+            // Чтобы кружок не мешал кликать по клетке
+            dot.IsHitTestVisible = false;
+
+            // Выравниваем по центру клетки
+            dot.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            dot.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+
+            Grid.SetColumn(dot, x);
+            Grid.SetRow(dot, y);
+            gameBoard.Children.Add(dot);
         }
     }
 }

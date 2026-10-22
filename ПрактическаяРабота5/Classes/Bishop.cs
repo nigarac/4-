@@ -1,10 +1,11 @@
 ﻿
 
 using System;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ПрактическаяРабота5.Classes
 {
@@ -102,6 +103,7 @@ namespace ПрактическаяРабота5.Classes
 
                     // Запоминаем что пешка более не является выделенной
                     this.Select = false;
+                    MainWindow.mainWindow.ClearDots();
                 }
                 else
                 {
@@ -110,6 +112,40 @@ namespace ПрактическаяРабота5.Classes
 
                     // Запоминаем что пешка является выделенной
                     this.Select = true;
+                }
+                MainWindow.mainWindow.ClearDots();
+
+                // Проходим по 4 диагоналям
+                for (int i = 1; i < 8; i++)
+                {
+                    // Координаты для проверки (вправо-вниз, влево-вниз, вправо-вверх, влево-вверх)
+                    int[] checkX = { this.X + i, this.X - i, this.X + i, this.X - i };
+                    int[] checkY = { this.Y + i, this.Y + i, this.Y - i, this.Y - i };
+
+                    for (int j = 0; j < 4; j++) // Проверяем все 4 направления
+                    {
+                        int tx = checkX[j];
+                        int ty = checkY[j];
+
+                        // Если вышли за доску - пропускаем
+                        if (tx < 0 || tx > 7 || ty < 0 || ty > 7) continue;
+
+                        // Ищем фигуру на этой клетке
+                        var p = MainWindow.mainWindow.Pawns.FirstOrDefault(f => f.X == tx && f.Y == ty);
+                        var b = MainWindow.mainWindow.Bishops.FirstOrDefault(f => f.X == tx && f.Y == ty);
+
+                        if (p != null || b != null) // Если клетка занята
+                        {
+                            bool isEnemy = (p != null && p.Black != this.Black) || (b != null && b.Black != this.Black);
+                            if (isEnemy) MainWindow.mainWindow.DrawDot(tx, ty, true); // Красный
+                            break; // Дальше по этой диагонали не идем
+                        }
+                        else // Если пусто
+                        {
+                            MainWindow.mainWindow.DrawDot(tx, ty, false); // Зеленый
+                        }
+                    }
+                   
                 }
 
             }
