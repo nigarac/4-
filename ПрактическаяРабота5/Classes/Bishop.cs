@@ -26,29 +26,61 @@ namespace ПрактическаяРабота5.Classes
         {
             bool atack = false;
 
+            Classes.Pawn attackingPawn = MainWindow.mainWindow.Pawns.Find(p => p.Select == true);
+
+            if (attackingPawn != null && attackingPawn.Black != this.Black)
+            {
+                bool isPawnAttacking = false;
+
+                
+                if (attackingPawn.Black == false && attackingPawn.Y + 1 == this.Y && Math.Abs(attackingPawn.X - this.X) == 1)
+                {
+                    isPawnAttacking = true;
+                }
+                // Если пешка ЧЕРНАЯ (идет вниз), она должна стоять на 1 клетку выше слона по Y (то есть Y пешки на 1 меньше)
+                else if (attackingPawn.Black == true && attackingPawn.Y - 1 == this.Y && Math.Abs(attackingPawn.X - this.X) == 1)
+                {
+                    isPawnAttacking = true;
+                }
+
+                if (isPawnAttacking)
+                {
+                    // Удаляем слона с доски и из списка
+                    MainWindow.mainWindow.gameBoard.Children.Remove(this.Figure);
+                    MainWindow.mainWindow.Bishops.Remove(this);
+
+                    // Перемещаем атакующую пешку на место слона
+                    Grid.SetColumn(attackingPawn.Figure, this.X);
+                    Grid.SetRow(attackingPawn.Figure, this.Y);
+                    attackingPawn.X = this.X;
+                    attackingPawn.Y = this.Y;
+
+                    // Снимаем выделение с пешки
+                    attackingPawn.SelectFigure(null, null);
+                    return; // Выходим из метода, так как слон уничтожен
+                }
+            }
+
+
+
             Bishop SelectBishop = MainWindow.mainWindow.Bishops.Find(X => X.Select == true);
 
             if (SelectBishop != null)
             {
-                if (this.Black && this.Y - 1 == SelectBishop.Y &&
-                    (X == SelectBishop.X - 1 || X == SelectBishop.X - 2 || X == SelectBishop.X - 3 || X == SelectBishop.X - 4 || X == SelectBishop.X - 5 || X == SelectBishop.X - 6 || X == SelectBishop.X - 7 ||
-                     X == SelectBishop.X + 1 || X == SelectBishop.X + 2 || X == SelectBishop.X + 3 || X == SelectBishop.X + 4 || X == SelectBishop.X + 5 || X == SelectBishop.X + 6 || X == SelectBishop.X + 7) ||
-                    !this.Black && this.Y - 1 == SelectBishop.Y &&
-                    (X == SelectBishop.X - 1 || X == SelectBishop.X - 2 || X == SelectBishop.X - 3 || X == SelectBishop.X - 4 || X == SelectBishop.X - 5 || X == SelectBishop.X - 6 || X == SelectBishop.X - 7 ||
-                     X == SelectBishop.X + 1 || X == SelectBishop.X + 2 || X == SelectBishop.X + 3 || X == SelectBishop.X + 4 || X == SelectBishop.X + 5 || X == SelectBishop.X + 6 || X == SelectBishop.X + 7))
+                if (this.Black != SelectBishop.Black && Math.Abs(this.X - SelectBishop.X) == Math.Abs(this.Y - SelectBishop.Y))
                 {
                     MainWindow.mainWindow.gameBoard.Children.Remove(this.Figure);
+                    MainWindow.mainWindow.Bishops.Remove(this);
 
-                    // Перемещаем атакующую пешку на координаты атакованной пешки
-                    Grid.SetColumn(SelectBishop.Figure, this.X);
-                    Grid.SetRow(SelectBishop.Figure, this.Y);
+                    
+                    //Grid.SetColumn(SelectBishop.Figure, this.X);
+                    //Grid.SetRow(SelectBishop.Figure, this.Y);
 
                     // Присваиваем обновлённые координаты пешке
-                    SelectBishop.X = this.X;
-                    SelectBishop.Y = this.Y;
+                    SelectBishop.Transform(this.X, this.Y);
 
-                    // Вызываем выделение пешки, которое снимет с неё выделение
-                    SelectBishop.SelectFigure(null, null);
+                    
+                    
                     return;
                     // Запоминаем что была произведена атака
                     atack = true;

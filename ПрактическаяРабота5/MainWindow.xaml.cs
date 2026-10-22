@@ -162,6 +162,12 @@ namespace ПрактическаяРабота5
                 // Перемещаем пешку на выбранный тайл
                 SelectPawn.Transform(X, Y);
             }
+
+            Classes.Bishop SelectBishop = Bishops.Find(x => x.Select == true);
+            if (SelectBishop != null)
+            {
+                SelectBishop.Transform(X, Y);
+            }
         }
     }
 }

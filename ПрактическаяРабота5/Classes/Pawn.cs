@@ -29,6 +29,22 @@ namespace ПрактическаяРабота5.Classes
         {
             // Переменная отвечающая за то, атакуют ли нашу фигуру
             bool atack = false;
+            Bishop attackingBishop = MainWindow.mainWindow.Bishops.Find(b => b.Select == true);
+            if (attackingBishop != null && attackingBishop.Black != this.Black)
+            {
+                // Если слон может дотянуться до этой пешки по диагонали
+                if (Math.Abs(this.X - attackingBishop.X) == Math.Abs(this.Y - attackingBishop.Y))
+                {
+                    // Удаляем эту пешку
+                    MainWindow.mainWindow.gameBoard.Children.Remove(this.Figure);
+                    MainWindow.mainWindow.Pawns.Remove(this);
+
+                    // Двигаем слона на место пешки
+                    attackingBishop.Transform(this.X, this.Y);
+                    return; // Выходим, пешка уничтожена
+                }
+            }
+
 
             // Среди всех пешек ищем пешку, которая является выделенной                                                                           
             Pawn SelectPawn = MainWindow.mainWindow.Pawns.Find(x => x.Select == true);
